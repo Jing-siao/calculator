@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Calculator.UI
 {
@@ -36,7 +37,6 @@ namespace Calculator.UI
             button_ac.Click += Button_ac_Click;
             button_back.Click += Button_back_Click;
             button_equals.Click += Button_equals_Click;
-            this.KeyPress += CalculatorUI_KeyPress;
 
         }
 
@@ -131,33 +131,38 @@ namespace Calculator.UI
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            Btn_click(null,null);
+            int pressed_key = (int)KeyInterop.VirtualKeyFromKey((Key)keyData);
             int intKey = (int)keyData;
-            if (intKey >= 96 && intKey <= 105) 
+            if (intKey >= 96 && intKey <= 105)
             {
                 textBox1.Text += (intKey - 96).ToString();
                 return true;
 
             }
+            else if (intKey == (int)Keys.Decimal)
+            {
+                textBox1.Text=TextValue(textBox1.Text, ".");
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        private void CalculatorUI_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char ch = e.KeyChar;
-                textBox1.Text += ch;
-            if ((ch < '0' || ch > '9') && ch != '\b' && ch != '.')
-            {
-                if ((byte)ch == 13)
-                {
-                    button_equals.Focus();
-                }
-                else
-                {  
-                     e.Handled = true;
+        //private void CalculatorUI_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    char ch = e.KeyChar;
+        //        textBox1.Text += ch;
+        //    if ((ch < '0' || ch > '9') && ch != '\b' && ch != '.')
+        //    {
+        //        if ((byte)ch == 13)
+        //        {
+        //            button_equals.Focus();
+        //        }
+        //        else
+        //        {  
+        //             e.Handled = true;
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
 
     }

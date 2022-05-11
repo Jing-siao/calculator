@@ -6,14 +6,14 @@ D:\Jing\計算機\WindowsFormsApp1\bin\Debug\CalculatorUI.dll
 D:\Jing\計算機\WindowsFormsApp1\bin\Debug\ICalculator.dll
 D:\Jing\計算機\WindowsFormsApp1\bin\Debug\CalculatorCore.pdb
 D:\Jing\計算機\WindowsFormsApp1\bin\Debug\CalculatorUI.pdb
-D:\Jing\計算機\dll\WindowsFormsApp1.exe.config
-D:\Jing\計算機\dll\WindowsFormsApp1.exe
-D:\Jing\計算機\dll\WindowsFormsApp1.pdb
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+D:\Jing\計算機\dll\WindowsFormsApp1.exe.config
+D:\Jing\計算機\dll\WindowsFormsApp1.exe
+D:\Jing\計算機\dll\WindowsFormsApp1.pdb
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 D:\Jing\計算機\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

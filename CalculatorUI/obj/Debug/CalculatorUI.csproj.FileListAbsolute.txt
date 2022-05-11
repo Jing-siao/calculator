@@ -9,4 +9,3 @@ D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.CoreCompileInputs.c
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.CopyComplete
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.dll
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.pdb
-D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.AssemblyReference.cache

@@ -16,6 +16,7 @@ namespace Calculator.UI
         ICalculator IC;
         string countText;
         string beforeValue;
+        
         public CalculatorUI(ICalculator ic)
         {
             InitializeComponent();
@@ -35,6 +36,7 @@ namespace Calculator.UI
             button_ac.Click += Button_ac_Click;
             button_back.Click += Button_back_Click;
             button_equals.Click += Button_equals_Click;
+            this.KeyPress += CalculatorUI_KeyPress;
 
         }
 
@@ -74,14 +76,14 @@ namespace Calculator.UI
 
                     break;
                 case "÷":
-                    if (textBox1.Text!="0")
+                    if (textBox1.Text!="0" && beforeValue!="0")
                     {
 
                     textBox1.Text = IC.等於(計算法.除法, Convert.ToDouble(beforeValue), Convert.ToDouble(textBox1.Text)).ToString();
                     }
                     else
                     {
-                        textBox1.Text = "錯誤";
+                        textBox1.Text = "0";
                     }
 
                     break;
@@ -94,19 +96,28 @@ namespace Calculator.UI
                     break;
             }
         }
-
-        private void Btn_click(object sender, EventArgs e)
+        static string TextValue(string boxValue, string buttonText)
         {
-            Button btn = (Button)sender;
-            if (textBox1.Text == "0"|| textBox1.Text =="")
+            if (boxValue == "0" || boxValue == "")
             {
-                textBox1.Text = btn.Text == "." ? "0." : btn.Text;
-
+                boxValue = buttonText == "." ? "0." : buttonText;
+                return boxValue;
             }
             else
             {
-                textBox1.Text += btn.Text;
+                //檢查小數點，如果已經有了就不能再次輸入
+                if ((buttonText != ".") || (!boxValue.Contains(".")))
+                {
+                    return boxValue += buttonText;
+                }
+                return boxValue;
             }
+        }
+        private void Btn_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            textBox1.Text=TextValue(textBox1.Text, btn.Text);
+            
         }
       
         private void Btn_count(object sender, EventArgs e)
@@ -114,8 +125,40 @@ namespace Calculator.UI
             Button btnCount = (Button)sender;
             countText = btnCount.Text;
             beforeValue = textBox1.Text;
-            label1.Text = beforeValue+ countText;
+            label1.Text = btnCount.Text== "√"? countText+ beforeValue: beforeValue + countText;
             textBox1.Text = "";
+            
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            Btn_click(null,null);
+            int intKey = (int)keyData;
+            if (intKey >= 96 && intKey <= 105) 
+            {
+                textBox1.Text += (intKey - 96).ToString();
+                return true;
+
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        private void CalculatorUI_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+                textBox1.Text += ch;
+            if ((ch < '0' || ch > '9') && ch != '\b' && ch != '.')
+            {
+                if ((byte)ch == 13)
+                {
+                    button_equals.Focus();
+                }
+                else
+                {  
+                     e.Handled = true;
+
+                }
+            }
+        }
+
+
     }
 }

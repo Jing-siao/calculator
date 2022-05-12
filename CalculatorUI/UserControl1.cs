@@ -17,7 +17,8 @@ namespace Calculator.UI
         ICalculator IC;
         string countText;
         string beforeValue;
-        
+        bool hasCount=false ;
+
         public CalculatorUI(ICalculator ic)
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace Calculator.UI
             {
                 item.Click += Btn_click;
             }
-            Button[] btnCount = new Button[5] { button_plus,button_minus,button_times,button_divided,button_square };
+            Button[] btnCount = new Button[5] { button_plus, button_minus, button_times, button_divided, button_square };
             foreach (var item in btnCount)
             {
                 item.Click += Btn_count;
@@ -39,69 +40,12 @@ namespace Calculator.UI
             button_equals.Click += Button_equals_Click;
 
         }
-
-        private void Button_ac_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "0";
-            label1.Text = "";
-           
-        }
-        private void Button_back_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text.Length > 1)
-            {
-            textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1, 1);
-            }
-            else
-            {
-                textBox1.Text = "0";
-            }
-        }
-
-
-        private void Button_equals_Click(object sender, EventArgs e)
-        {
-            switch (countText)
-            {
-                case "+":
-                    textBox1.Text =IC.等於(計算法.加法, Convert.ToDouble(beforeValue) , Convert.ToDouble(textBox1.Text)).ToString();
-
-                    break;
-                case "-":
-                    textBox1.Text = IC.等於(計算法.減法, Convert.ToDouble(beforeValue), Convert.ToDouble(textBox1.Text)).ToString();
-
-                    break;
-                case "×":
-                    textBox1.Text = IC.等於(計算法.乘法, Convert.ToDouble(beforeValue), Convert.ToDouble(textBox1.Text)).ToString();
-
-                    break;
-                case "÷":
-                    if (textBox1.Text!="0" && beforeValue!="0")
-                    {
-
-                    textBox1.Text = IC.等於(計算法.除法, Convert.ToDouble(beforeValue), Convert.ToDouble(textBox1.Text)).ToString();
-                    }
-                    else
-                    {
-                        textBox1.Text = "0";
-                    }
-
-                    break;
-                case "√":
-                    textBox1.Text = IC.等於(計算法.開根號, Convert.ToDouble(beforeValue)).ToString();
-
-                    break;
-                default:
-                    textBox1.Text = "0";
-                    break;
-            }
-        }
-        static string TextValue(string boxValue, string buttonText)
+        //輸入數字
+        private string TextValue(string boxValue, string buttonText)
         {
             if (boxValue == "0" || boxValue == "")
             {
-                boxValue = buttonText == "." ? "0." : buttonText;
-                return boxValue;
+                return buttonText == "." ? "0." : buttonText;
             }
             else
             {
@@ -113,57 +57,174 @@ namespace Calculator.UI
                 return boxValue;
             }
         }
+        //歸零
+        private void Clear()
+        {
+            textBox1.Text = "0";
+            label1.Text = "";
+            countText = "";
+            beforeValue = "";
+        }
+        //倒退鍵
+        static string Back(string boxValue)
+        {
+            return boxValue.Length > 1 ? boxValue.Remove(boxValue.Length - 1, 1) : "0";
+        }
+        //鍵盤數字鍵
+        static string KeyNum(string boxValue, int key, int num)
+        {
+            return boxValue == "0" || boxValue == "" ? (key - num).ToString() : boxValue += (key - num).ToString();
+        }
+        //鍵盤運算鍵
+        private void KeyCount(string boxValue, string KeyCountText)
+        {
+            if (!hasCount)
+            {
+                beforeValue = boxValue;
+            }
+            countText = KeyCountText;
+            //beforeValue = boxValue;
+            hasCount = true;
+
+            if (KeyCountText == "√")
+            {
+                textBox1.Text = IC.等於(計算法.開根號, Convert.ToDouble(beforeValue)).ToString();
+                label1.Text = countText + " " + beforeValue;
+            }
+            else
+            {
+                label1.Text = beforeValue + " " + countText;
+                textBox1.Text = "";
+            }
+        }
+        //等於運算
+        private string Equals(string boxValue, string a)
+        {
+            hasCount = false;
+            switch (countText)
+            {
+                case "+":
+                    label1.Text = a + " " + countText + " " + boxValue + " = ";
+                    boxValue = IC.等於(計算法.加法, Convert.ToDouble(a), Convert.ToDouble(boxValue)).ToString();
+
+                    break;
+                case "-":
+                    label1.Text = a + " " + countText + " " + boxValue + " = ";
+                    boxValue = IC.等於(計算法.減法, Convert.ToDouble(a), Convert.ToDouble(boxValue)).ToString();
+
+                    break;
+                case "×":
+                    label1.Text = a + " " + countText + " " + boxValue + " = ";
+                    boxValue = IC.等於(計算法.乘法, Convert.ToDouble(a), Convert.ToDouble(boxValue)).ToString();
+
+                    break;
+                case "÷":
+                    label1.Text = a + " " + countText + " " + boxValue + " = ";
+                    if (boxValue != "0" && a != "0")
+                    {
+
+                        boxValue = IC.等於(計算法.除法, Convert.ToDouble(a), Convert.ToDouble(boxValue)).ToString();
+                    }
+                    else
+                    {
+                        boxValue = "0";
+                    }
+
+                    break;
+                case "√":
+                    label1.Text = a + " " + countText;
+                    boxValue = IC.等於(計算法.開根號, Convert.ToDouble(beforeValue)).ToString();
+
+                    break;
+                default:
+                    boxValue = "0";
+                    break;
+            }
+            return boxValue;
+        }
+        private void Button_ac_Click(object sender, EventArgs e)
+        {
+            Clear();
+
+        }
+        private void Button_back_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = Back(textBox1.Text);
+        }
+
+
+        private void Button_equals_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text!="")
+            {
+                textBox1.Text = Equals(textBox1.Text, beforeValue);
+            }
+        }
+
         private void Btn_click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            textBox1.Text=TextValue(textBox1.Text, btn.Text);
-            
+            textBox1.Text = TextValue(textBox1.Text, btn.Text);
+
         }
-      
+
         private void Btn_count(object sender, EventArgs e)
         {
             Button btnCount = (Button)sender;
-            countText = btnCount.Text;
-            beforeValue = textBox1.Text;
-            label1.Text = btnCount.Text== "√"? countText+ beforeValue: beforeValue + countText;
-            textBox1.Text = "";
             
+            KeyCount(textBox1.Text, btnCount.Text);
+
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            int pressed_key = (int)KeyInterop.VirtualKeyFromKey((Key)keyData);
             int intKey = (int)keyData;
             if (intKey >= 96 && intKey <= 105)
             {
-                textBox1.Text += (intKey - 96).ToString();
-                return true;
+                textBox1.Text = KeyNum(textBox1.Text, intKey, 96);
 
             }
-            else if (intKey == (int)Keys.Decimal)
+            else if (intKey >= 48 && intKey <= 57)
             {
-                textBox1.Text=TextValue(textBox1.Text, ".");
+                textBox1.Text = KeyNum(textBox1.Text, intKey, 48);
+            }
+            switch (intKey)
+            {
+                case 110:
+                case 190:
+                    textBox1.Text = TextValue(textBox1.Text, ".");
+                    break;
+                case 8:
+                    textBox1.Text = Back(textBox1.Text);
+                    break;
+                case 27:
+                    Clear();
+                    break;
+                case 187:
+                case 107:
+                    KeyCount(textBox1.Text, "+");
+                    break;
+                case 189:
+                case 109:
+                    KeyCount(textBox1.Text, "-");
+                    break;
+                case 106:
+                    KeyCount(textBox1.Text, "×");
+                    break;
+                case 111:
+                    KeyCount(textBox1.Text, "÷");
+                    break;
+                case 13:
+                    label1.Focus();
+                    if (textBox1.Text!="")
+                    {
+                        textBox1.Text = Equals(textBox1.Text, beforeValue);
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        //private void CalculatorUI_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    char ch = e.KeyChar;
-        //        textBox1.Text += ch;
-        //    if ((ch < '0' || ch > '9') && ch != '\b' && ch != '.')
-        //    {
-        //        if ((byte)ch == 13)
-        //        {
-        //            button_equals.Focus();
-        //        }
-        //        else
-        //        {  
-        //             e.Handled = true;
-
-        //        }
-        //    }
-        //}
-
-
     }
 }

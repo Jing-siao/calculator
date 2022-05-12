@@ -1,11 +1,11 @@
 D:\Jing\計算機\CalculatorUI\bin\Debug\CalculatorUI.dll
 D:\Jing\計算機\CalculatorUI\bin\Debug\CalculatorUI.pdb
 D:\Jing\計算機\CalculatorUI\bin\Debug\ICalculator.dll
-D:\Jing\計算機\dll\CalculatorUI.dll
-D:\Jing\計算機\dll\CalculatorUI.pdb
 D:\Jing\計算機\CalculatorUI\obj\Debug\Calculator.UI.CalculatorUI.resources
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.GenerateResource.cache
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.CoreCompileInputs.cache
+D:\Jing\計算機\dll\CalculatorUI.dll
+D:\Jing\計算機\dll\CalculatorUI.pdb
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.csproj.CopyComplete
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.dll
 D:\Jing\計算機\CalculatorUI\obj\Debug\CalculatorUI.pdb
